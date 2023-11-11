@@ -1,10 +1,7 @@
 extends CharacterBody2D
 
+@export var movement_data: PlayerMovementData
 
-const SPEED: float = 100.0
-const ACCELERATION: float = 800.0
-const FRICTION: float = 1000.0
-const JUMP_VELOCITY: float = -300.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -33,24 +30,27 @@ func _physics_process(delta: float):
 
 func apply_gravity(delta: float):
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += gravity * delta * movement_data.gravity_scale
 		
 func handle_jump():
 	if is_on_floor() or coyote_jump_timer.time_left > 0:
 		if Input.is_action_just_pressed("ui_up"):
-			velocity.y = JUMP_VELOCITY
+			velocity.y = movement_data.jump_velocity
 	
 	if not is_on_floor():
-		if velocity.y < JUMP_VELOCITY/2 and Input.is_action_just_released("ui_up"):
-			velocity.y = JUMP_VELOCITY/2
+		if velocity.y < movement_data.jump_velocity/2 and Input.is_action_just_released("ui_up"):
+			velocity.y = movement_data.jump_velocity/2
 
 func handle_acceleration(input_axis: float, delta: float):
 	if input_axis:
-		velocity.x = move_toward(velocity.x, input_axis * SPEED, ACCELERATION * delta)
+		velocity.x = move_toward(velocity.x, input_axis * movement_data.speed, movement_data.acceleration * delta)
 
 func apply_friction(input_axis: float, delta: float):
 	if input_axis == 0.0:
-		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+		var friction = movement_data.air_resistance
+		if is_on_floor():
+			friction = movement_data.friction
+		velocity.x = move_toward(velocity.x, 0, friction * delta)
 
 func update_animations(input_axis: float):
 	if input_axis:

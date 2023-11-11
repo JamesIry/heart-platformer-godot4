@@ -1,10 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cnb5f842rvw8e"]
+[gd_scene load_steps=14 format=3 uid="uid://cnb5f842rvw8e"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_urj0l"]
+[ext_resource type="Resource" uid="uid://chngn8gt84jig" path="res://default_movement_data.tres" id="2_5ruiu"]
 [ext_resource type="Texture2D" uid="uid://dy4rgel45r1wt" path="res://player.png" id="2_se5tx"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3y02"]
-size = Vector2(8, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_haqq2"]
 atlas = ExtResource("2_se5tx")
@@ -80,14 +78,14 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3y02"]
+size = Vector2(8, 16)
+
 [node name="Player" type="CharacterBody2D"]
 floor_constant_speed = true
-floor_snap_length = 2.0
+floor_snap_length = 3.0
 script = ExtResource("1_urj0l")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_c3y02")
+movement_data = ExtResource("2_5ruiu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
@@ -95,6 +93,10 @@ sprite_frames = SubResource("SpriteFrames_2w0dy")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.20136
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_c3y02")
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.15
