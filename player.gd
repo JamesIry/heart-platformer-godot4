@@ -9,6 +9,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var coyote_jump_timer: Timer = $CoyoteJumpTimer
+@onready var starting_position = global_position
 
 
 func _physics_process(delta: float):
@@ -47,12 +48,11 @@ func handle_wall_jump():
 func handle_jump():
 		if is_on_floor():
 			air_jump = true
-		
+
 		if is_on_floor() or coyote_jump_timer.time_left > 0:
 			if Input.is_action_just_pressed("ui_up"):
 				velocity.y = movement_data.jump_velocity
-		
-		if not is_on_floor():
+		else:
 			if velocity.y < movement_data.jump_velocity/2 and Input.is_action_just_released("ui_up"):
 				velocity.y = movement_data.jump_velocity/2
 			
@@ -87,3 +87,7 @@ func update_animations(input_axis: float):
 		
 	if not is_on_floor():
 		animated_sprite_2d.play("jump")
+
+
+func _on_hazrd_detector_area_entered(area):
+	global_position = starting_position
