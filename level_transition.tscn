@@ -62,6 +62,7 @@ layer = 10
 script = ExtResource("1_plyr0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RESET"
 libraries = {
 "": SubResource("AnimationLibrary_4tsey")
 }

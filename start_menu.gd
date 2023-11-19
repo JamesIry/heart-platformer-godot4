@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var quit_game_button = %QuitGameButton
 
 func _ready():
+	RenderingServer.set_default_clear_color(Color.BLACK)
 	start_game_button.grab_focus()
 
 func _on_start_game_button_pressed():
