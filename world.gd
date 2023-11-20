@@ -13,12 +13,16 @@ func _ready():
 	Events.level_completed.connect(show_level_completed)
 	get_tree().paused = true
 	start_in.visible = true
-	await LevelTransition.fade_from_black()
+	LevelTransition.fade_from_black()
 	animation_player.play("countdown")
 	await animation_player.animation_finished
 	get_tree().paused = false
 	start_in.visible = false
 	level_start_time = Time.get_ticks_msec()
+	
+	if not next_level is PackedScene:
+		level_completed.next_level_button.text = "Victory Screen"
+		next_level = load("res://victory_screen.tscn")
 
 func _process(delta):
 	var time_on_level = Time.get_ticks_msec() - level_start_time
