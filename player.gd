@@ -15,6 +15,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _physics_process(delta: float):
+	if global_position.y > 400:
+		global_position = starting_position
+	
 	apply_gravity(delta)
 	handle_wall_jump()
 	handle_jump()
