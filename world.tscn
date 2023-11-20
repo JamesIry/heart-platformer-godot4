@@ -71,9 +71,21 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="StartInLabel" type="Label" parent="CanvasLayer/StartIn/CenterContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 text = "Start in: 3"
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 4.0
+offset_bottom = 10.0
+grow_horizontal = 2
+
+[node name="LevelTimeLabel" type="Label" parent="CanvasLayer/CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+vertical_alignment = 1
 
 [node name="LevelTileMap" parent="." instance=ExtResource("6_l8sj4")]
 
@@ -82,3 +94,6 @@ process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_0v35u")
 }
+
+[connection signal="next_level" from="CanvasLayer/LevelCompleted" to="." method="_on_level_completed_next_level"]
+[connection signal="retry" from="CanvasLayer/LevelCompleted" to="." method="_on_level_completed_retry"]

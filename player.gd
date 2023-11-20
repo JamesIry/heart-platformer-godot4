@@ -47,6 +47,7 @@ func apply_gravity(delta: float):
 
 func handle_wall_jump():
 	if is_on_wall_only() or wall_jump_timer.time_left > 0:
+		wall_jump_timer.stop()
 		if Input.is_action_just_pressed("jump") and (wall_normal == Vector2.LEFT or wall_normal == Vector2.RIGHT):
 			just_wall_jumped = true
 			velocity.x = wall_normal.x * movement_data.speed
@@ -59,6 +60,7 @@ func handle_jump():
 		if is_on_floor() or coyote_jump_timer.time_left > 0:
 			if Input.is_action_pressed("jump"):
 				velocity.y = movement_data.jump_velocity
+				coyote_jump_timer.stop()
 		else:
 			if velocity.y < movement_data.jump_velocity/2 and Input.is_action_just_released("jump"):
 				velocity.y = movement_data.jump_velocity/2
